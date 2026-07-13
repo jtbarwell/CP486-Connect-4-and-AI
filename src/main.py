@@ -4,6 +4,7 @@ import sys
 from gameSetting import *
 from gameFunctions import *
 from player import *
+from menu import *
 
 def __main__():
     board = create_board()
@@ -88,6 +89,10 @@ def __main__():
 
         if game_over:
             pygame.time.wait(1500)
+    screen = pygame.display.set_mode((width, height))
+    pygame.display.set_caption("Connect 4")
+    run_menu(screen)
+
 
 if __name__ == "__main__":
     __main__()
