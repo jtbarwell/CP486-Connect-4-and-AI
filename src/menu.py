@@ -11,7 +11,7 @@ AGENT_LABELS = {
 
 
 def draw_menu(screen, font, player1_type, player2_type):
-    screen.fill(BLACK)
+    screen.fill(NAVY_BG)
     title = font.render("CONNECT 4", True, WHITE)
     screen.blit(title, (width // 2 - title.get_width() // 2, 40))
 
@@ -24,7 +24,7 @@ def draw_menu(screen, font, player1_type, player2_type):
     start_rect = pygame.Rect(width // 2 - 250, 420, 500, 120)
     pygame.draw.rect(screen, GREEN, start_rect)
     start_label = font.render("START GAME", True, BLACK)
-    screen.blit(start_label, (width // 2 - start_label.get_width() // 2, 435))
+    screen.blit(start_label, (width // 2 - start_label.get_width() // 2, 430))
     return start_rect
 
 
@@ -37,7 +37,7 @@ def draw_player_selector(screen, x, y, title, selected_type):
     button_y = y + 60
     for index, agent_type in enumerate(AGENT_TYPES):
         button_rect = pygame.Rect(x + 20 + (index % 2) * 110, button_y + (index // 2) * 50, 90, 35)
-        color = YELLOW if agent_type == selected_type else LIGHT_BLUE
+        color = YELLOW_BOX if agent_type == selected_type else LIGHT_BLUE
         pygame.draw.rect(screen, color, button_rect)
         label = pygame.font.SysFont("monospace", 14).render(AGENT_LABELS[agent_type], True, BLACK)
         screen.blit(label, (button_rect.x + 10, button_rect.y + 8))

@@ -43,7 +43,7 @@ def gameLoop(screen, p1, p2):
                     sys.exit()
 
                 if event.type == pygame.MOUSEMOTION:
-                    pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
+                    pygame.draw.rect(screen, NAVY_BG, (0,0, width, SQUARESIZE))
                     posx = event.pos[0]
                     if turn == 0:
                         pygame.draw.circle(screen, RED, (posx, int(SQUARESIZE/2)), RADIUS)
@@ -52,7 +52,7 @@ def gameLoop(screen, p1, p2):
                 pygame.display.update()
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
+                    pygame.draw.rect(screen, NAVY_BG, (0,0, width, SQUARESIZE))
                     #print(event.pos)
                     # Ask for Player 1 Input
                     if turn == 0:
