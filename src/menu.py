@@ -5,7 +5,7 @@ AGENT_TYPES = ["user", "random", "ruleBased", "miniMax"]
 AGENT_LABELS = {
     "user": "Human",
     "random": "Random",
-    "ruleBased": "Rule",
+    "ruleBased": "RuleBased",
     "miniMax": "MiniMax"
 }
 
@@ -36,7 +36,7 @@ def draw_player_selector(screen, x, y, title, selected_type):
 
     button_y = y + 60
     for index, agent_type in enumerate(AGENT_TYPES):
-        button_rect = pygame.Rect(x + 20 + (index % 2) * 100, button_y + (index // 2) * 50, 80, 35)
+        button_rect = pygame.Rect(x + 20 + (index % 2) * 110, button_y + (index // 2) * 50, 90, 35)
         color = YELLOW if agent_type == selected_type else LIGHT_BLUE
         pygame.draw.rect(screen, color, button_rect)
         label = pygame.font.SysFont("monospace", 14).render(AGENT_LABELS[agent_type], True, BLACK)
