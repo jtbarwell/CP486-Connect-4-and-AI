@@ -5,22 +5,15 @@ from gameSetting import *
 from gameFunctions import *
 from player import *
 
-def gameLoop():
+def gameLoop(screen, p1, p2):
     board = create_board()
     print_board(board)
     game_over = False
     turn = 0
 
-    player1 = "user"
-    player2 = "miniMax"
+    player1 = p1
+    player2 = p2
 
-    pygame.init()
-
-
-    size = (width, height)
-
-
-    screen = pygame.display.set_mode(size)
     draw_board(board, screen)
     pygame.display.update()
 
