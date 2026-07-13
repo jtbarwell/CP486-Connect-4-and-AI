@@ -13,7 +13,7 @@ def __main__():
     turn = 0
 
     player1 = "user"
-    player2 = "random"
+    player2 = "ruleBased"
 
     pygame.init()
 

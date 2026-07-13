@@ -7,7 +7,7 @@ from gameFunctions import *
 
 from agents.randomAgent import randomAgent
 # from agents.miniMaxAgent import miniMaxAgent
-# from agents.ruleBasedAgent import ruleBasedAgent
+from agents.ruleBasedAgent import ruleBasedAgent
 
 def playerAction(playerType, event, board, pnum):
     
@@ -21,4 +21,9 @@ def playerAction(playerType, event, board, pnum):
 
     elif playerType == "random":
         randomAgent(board, pnum)
-
+    elif playerType == "ruleBased":
+        ruleBasedAgent(board, pnum)
+    # elif playerType == "miniMax":
+    #     miniMaxAgent(board, pnum)
+    else:
+        print("Invalid player type. Please choose 'user', 'random', 'ruleBased', or 'miniMax'.")
