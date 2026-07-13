@@ -13,7 +13,7 @@ def __main__():
     turn = 0
 
     player1 = "user"
-    player2 = "user"
+    player2 = "random"
 
     pygame.init()
 
@@ -55,14 +55,15 @@ def __main__():
                         game_over = True
 
 
-                # # Ask for Player 2 Input
-                else:				
-                    playerAction(player2, event, board, 2)
+                # # Ask for Player 2 Input if Player 2 is a user
+                else:
+                    if player2 == "user":
+                        playerAction(player2, event, board, 2)
 
-                    if winning_move(board, 2):
-                        label = myfont.render("Player 2 wins!!", 1, YELLOW)
-                        screen.blit(label, (40,10))
-                        game_over = True
+                        if winning_move(board, 2):
+                            label = myfont.render("Player 2 wins!!", 1, YELLOW)
+                            screen.blit(label, (40,10))
+                            game_over = True
 
                 print_board(board)
                 draw_board(board, screen)
@@ -70,8 +71,24 @@ def __main__():
                 turn += 1
                 turn = turn % 2
 
-                if game_over:
-                    pygame.time.wait(3000)
+        # Player 2 Input if Player 2 is an agent (not user)
+        if player2 != "user" and turn == 1 and not game_over:
+            pygame.time.wait(500)
+            playerAction(player2, event, board, 2)
+
+            if winning_move(board, 2):
+                label = myfont.render("Player 2 wins!!", 1, YELLOW)
+                screen.blit(label, (40,10))
+                game_over = True
+
+            print_board(board)
+            draw_board(board, screen)
+
+            turn += 1
+            turn = turn % 2
+
+        if game_over:
+            pygame.time.wait(1500)
 
 if __name__ == "__main__":
     __main__()
