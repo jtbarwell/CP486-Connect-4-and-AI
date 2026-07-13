@@ -57,7 +57,7 @@ def gameLoop(screen, p1, p2):
                     #print(event.pos)
                     # Ask for Player 1 Input
                     if turn == 0:
-                        playerAction(player1, event, board, 1)
+                        playerAction(player1, board, 1, event)
 
                         if winning_move(board, 1):
                             label = myfont.render("Player 1 wins!!", 1, RED)
@@ -68,7 +68,7 @@ def gameLoop(screen, p1, p2):
                     # # Ask for Player 2 Input if Player 2 is a user
                     else:
                         if player2 == "user":
-                            playerAction(player2, event, board, 2)
+                            playerAction(player2, board, 2, event)
 
                             if winning_move(board, 2):
                                 label = myfont.render("Player 2 wins!!", 1, YELLOW)
