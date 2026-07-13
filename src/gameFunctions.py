@@ -56,7 +56,7 @@ def winning_move(board, piece):
 def draw_board(board, screen):
 	for c in range(COLUMN_COUNT):
 		for r in range(ROW_COUNT):
-			pygame.draw.rect(screen, BLUE, (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
+			pygame.draw.rect(screen, BOARD_BLUE, (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
 			pygame.draw.circle(screen, NAVY_BG, (int(c*SQUARESIZE+SQUARESIZE/2), int(r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2)), RADIUS)
 	
 	for c in range(COLUMN_COUNT):

@@ -6,6 +6,7 @@ import math
 START_SCREEN = "menu"
 
 BLUE = (48,98,124)
+BOARD_BLUE = (0, 0, 255)
 BLACK = (0,0,0)
 RED = (255,0,0)
 YELLOW = (255,255,0)

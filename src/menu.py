@@ -45,8 +45,14 @@ def draw_player_selector(screen, x, y, title, selected_type):
 
 def draw_game_over(screen, message, subtitle, font):
     # screen.fill(BLACK)
-    label = font.render(message, True, YELLOW)
+    winning_color = YELLOW if "Player 1" in subtitle else RED
+    # add rectangle behind subtitle THAT IS LENGTH OF SUBTITLE 
+    subtitle_rect = pygame.Rect(0, 190, 1300, 80)
+    pygame.draw.rect(screen, NAVY_BG, subtitle_rect)
+
+    label = font.render(message, True, winning_color)
     screen.blit(label, (width // 2 - label.get_width() // 2, 10))
+    
 
     subtitle_label = pygame.font.SysFont("monospace", 50).render(subtitle, True, WHITE)
     screen.blit(subtitle_label, (width // 2 - subtitle_label.get_width() // 2, 200))
