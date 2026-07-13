@@ -5,13 +5,15 @@ import math
 
 START_SCREEN = "menu"
 
-BLUE = (0,0,255)
+BLUE = (48,98,124)
 BLACK = (0,0,0)
 RED = (255,0,0)
 YELLOW = (255,255,0)
+YELLOW_BOX = (249,248,113) # for menu items which are selected
 WHITE = (255,255,255)
-LIGHT_BLUE = (173, 216, 230)
-GREEN = (0, 255, 0)
+LIGHT_BLUE = (173, 216, 230) # for menu boxes to select agent
+NAVY_BG = (31, 33, 51)
+GREEN = (0, 200, 149)
 
 ROW_COUNT = 6
 COLUMN_COUNT = 7
