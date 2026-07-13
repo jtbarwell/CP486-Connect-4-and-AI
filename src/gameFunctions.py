@@ -1,7 +1,5 @@
 import numpy as np
 import pygame
-import sys
-import math
 from gameSetting import *
 
 def create_board():
@@ -13,6 +11,14 @@ def drop_piece(board, row, col, piece):
 
 def is_valid_location(board, col):
 	return board[ROW_COUNT-1][col] == 0
+
+def get_valid_locations(board):
+    valid_locations = []
+    for col in range(COLUMN_COUNT):
+        # If the top cell in the column is empty (0), the column is a valid move
+        if board[ROW_COUNT-1][col] == 0:
+            valid_locations.append(col)
+    return valid_locations
 
 def get_next_open_row(board, col):
 	for r in range(ROW_COUNT):

@@ -1,12 +1,10 @@
 import numpy as np
-import pygame
-import sys
 import math
 from gameSetting import *
 from gameFunctions import *
 
 from agents.randomAgent import randomAgent
-# from agents.miniMaxAgent import miniMaxAgent
+from agents.miniMaxAgent import miniMaxAgent
 from agents.ruleBasedAgent import ruleBasedAgent
 
 def playerAction(playerType, event, board, pnum):
@@ -23,7 +21,8 @@ def playerAction(playerType, event, board, pnum):
         randomAgent(board, pnum)
     elif playerType == "ruleBased":
         ruleBasedAgent(board, pnum)
-    # elif playerType == "miniMax":
-    #     miniMaxAgent(board, pnum)
+    elif playerType == "miniMax":
+        best_col, best_score = miniMaxAgent(board, pnum, 4)  # Assuming depth of 4 for the minimax agent
+        drop_piece(board, get_next_open_row(board, best_col), best_col, pnum)
     else:
         print("Invalid player type. Please choose 'user', 'random', 'ruleBased', or 'miniMax'.")

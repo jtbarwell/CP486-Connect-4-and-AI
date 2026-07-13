@@ -1,7 +1,6 @@
 import numpy as np
 import pygame
 import sys
-import math
 from gameSetting import *
 from gameFunctions import *
 from player import *
@@ -13,7 +12,7 @@ def __main__():
     turn = 0
 
     player1 = "user"
-    player2 = "ruleBased"
+    player2 = "miniMax"
 
     pygame.init()
 
