@@ -7,7 +7,7 @@ from agents.randomAgent import randomAgent
 from agents.miniMaxAgent import miniMaxAgent
 from agents.ruleBasedAgent import ruleBasedAgent
 
-def playerAction(playerType, event, board, pnum):
+def playerAction(playerType, board, pnum, event=None):
     
     if playerType == "user":
         posx = event.pos[0]

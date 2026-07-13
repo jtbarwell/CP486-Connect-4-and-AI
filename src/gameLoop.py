@@ -22,52 +22,69 @@ def gameLoop(screen, p1, p2):
 
     while not game_over:
 
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
+        # Player 1 Input if Player 1 is an agent (not user)
+        if player1 != "user" and turn == 0 and not game_over:
+            pygame.time.wait(500)
+            playerAction(player1, board, 1)
 
-            if event.type == pygame.MOUSEMOTION:
-                pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
-                posx = event.pos[0]
-                if turn == 0:
-                    pygame.draw.circle(screen, RED, (posx, int(SQUARESIZE/2)), RADIUS)
-                else: 
-                    pygame.draw.circle(screen, YELLOW, (posx, int(SQUARESIZE/2)), RADIUS)
-            pygame.display.update()
+            if winning_move(board, 1):
+                label = myfont.render("Player 1 wins!!", 1, RED)
+                screen.blit(label, (40,10))
+                game_over = True
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
-                #print(event.pos)
-                # Ask for Player 1 Input
-                if turn == 0:
-                    playerAction(player1, event, board, 1)
+            print_board(board)
+            draw_board(board, screen)
 
-                    if winning_move(board, 1):
-                        label = myfont.render("Player 1 wins!!", 1, RED)
-                        screen.blit(label, (40,10))
-                        game_over = True
+            turn += 1
+            turn = turn % 2
+        
+        if player1 == "user" or player2 == "user" and not game_over:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
 
+                if event.type == pygame.MOUSEMOTION:
+                    pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
+                    posx = event.pos[0]
+                    if turn == 0:
+                        pygame.draw.circle(screen, RED, (posx, int(SQUARESIZE/2)), RADIUS)
+                    else: 
+                        pygame.draw.circle(screen, YELLOW, (posx, int(SQUARESIZE/2)), RADIUS)
+                pygame.display.update()
 
-                # # Ask for Player 2 Input if Player 2 is a user
-                else:
-                    if player2 == "user":
-                        playerAction(player2, event, board, 2)
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
+                    #print(event.pos)
+                    # Ask for Player 1 Input
+                    if turn == 0:
+                        playerAction(player1, event, board, 1)
 
-                        if winning_move(board, 2):
-                            label = myfont.render("Player 2 wins!!", 1, YELLOW)
+                        if winning_move(board, 1):
+                            label = myfont.render("Player 1 wins!!", 1, RED)
                             screen.blit(label, (40,10))
                             game_over = True
 
-                print_board(board)
-                draw_board(board, screen)
 
-                turn += 1
-                turn = turn % 2
+                    # # Ask for Player 2 Input if Player 2 is a user
+                    else:
+                        if player2 == "user":
+                            playerAction(player2, event, board, 2)
+
+                            if winning_move(board, 2):
+                                label = myfont.render("Player 2 wins!!", 1, YELLOW)
+                                screen.blit(label, (40,10))
+                                game_over = True
+
+                    print_board(board)
+                    draw_board(board, screen)
+
+                    turn += 1
+                    turn = turn % 2
 
         # Player 2 Input if Player 2 is an agent (not user)
         if player2 != "user" and turn == 1 and not game_over:
             pygame.time.wait(500)
-            playerAction(player2, event, board, 2)
+            playerAction(player2, board, 2)
 
             if winning_move(board, 2):
                 label = myfont.render("Player 2 wins!!", 1, YELLOW)
@@ -80,6 +97,13 @@ def gameLoop(screen, p1, p2):
             turn += 1
             turn = turn % 2
 
+        # Check for draw
+        if not game_over and len(get_valid_locations(board)) == 0:
+            label = myfont.render("Draw!", 1, GREEN)
+            screen.blit(label, (40,10))
+            game_over = True
+
+
         if game_over:
-            pygame.time.wait(750)
+            pygame.time.wait(1500)
             run_menu(screen, player1, player2)
