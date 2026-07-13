@@ -14,3 +14,4 @@ def playerAction(playerType, event, board, pnum):
         if is_valid_location(board, col):
             row = get_next_open_row(board, col)
             drop_piece(board, row, col, pnum)
+            # hi
