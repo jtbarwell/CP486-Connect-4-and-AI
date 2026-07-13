@@ -43,14 +43,22 @@ def draw_player_selector(screen, x, y, title, selected_type):
         screen.blit(label, (button_rect.x + 10, button_rect.y + 8))
 
 
-def draw_game_over(screen, message, font):
-    screen.fill(NAVY_BG)
-    label = font.render(message, True, YELLOW_BOX)
-    screen.blit(label, (width // 2 - label.get_width() // 2, 140))
+def draw_game_over(screen, message, subtitle, font):
+    # screen.fill(BLACK)
+    label = font.render(message, True, YELLOW)
+    screen.blit(label, (width // 2 - label.get_width() // 2, 10))
+
+    subtitle_label = pygame.font.SysFont("monospace", 50).render(subtitle, True, WHITE)
+    screen.blit(subtitle_label, (width // 2 - subtitle_label.get_width() // 2, 200))
+
     button_rect = pygame.Rect(width // 2 - 120, 280, 240, 60)
     pygame.draw.rect(screen, GREEN, button_rect)
+
     button_text = pygame.font.SysFont("monospace", 26).render("BACK TO MENU", True, BLACK)
     screen.blit(button_text, (width // 2 - button_text.get_width() // 2, 295))
+
+    pygame.display.flip()
+    
     return button_rect
 
 

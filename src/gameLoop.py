@@ -3,7 +3,7 @@ import pygame
 import sys
 from gameSetting import *
 from gameFunctions import *
-from menu import run_menu
+from menu import draw_game_over
 from player import *
 
 def gameLoop(screen, p1, p2):
@@ -14,7 +14,7 @@ def gameLoop(screen, p1, p2):
 
     player1 = p1
     player2 = p2
-
+    screen.fill(BLACK)
     draw_board(board, screen)
     pygame.display.update()
 
@@ -28,8 +28,7 @@ def gameLoop(screen, p1, p2):
             playerAction(player1, board, 1)
 
             if winning_move(board, 1):
-                label = myfont.render("Player 1 wins!!", 1, RED)
-                screen.blit(label, (40,10))
+                label = "Player 1 (" + player1 + ") wins!!"
                 game_over = True
 
             print_board(board)
@@ -60,8 +59,7 @@ def gameLoop(screen, p1, p2):
                         playerAction(player1, board, 1, event)
 
                         if winning_move(board, 1):
-                            label = myfont.render("Player 1 wins!!", 1, RED)
-                            screen.blit(label, (40,10))
+                            label = "Player 1 (" + player1 + ") wins!!"
                             game_over = True
 
 
@@ -71,8 +69,7 @@ def gameLoop(screen, p1, p2):
                             playerAction(player2, board, 2, event)
 
                             if winning_move(board, 2):
-                                label = myfont.render("Player 2 wins!!", 1, YELLOW)
-                                screen.blit(label, (40,10))
+                                label = "Player 2 (" + player2 + ") wins!!"
                                 game_over = True
 
                     print_board(board)
@@ -87,8 +84,7 @@ def gameLoop(screen, p1, p2):
             playerAction(player2, board, 2)
 
             if winning_move(board, 2):
-                label = myfont.render("Player 2 wins!!", 1, YELLOW)
-                screen.blit(label, (40,10))
+                label = "Player 2 (" + player2 + ") wins!!"
                 game_over = True
 
             print_board(board)
@@ -99,11 +95,19 @@ def gameLoop(screen, p1, p2):
 
         # Check for draw
         if not game_over and len(get_valid_locations(board)) == 0:
-            label = myfont.render("Draw!", 1, GREEN)
-            screen.blit(label, (40,10))
+            label = "Draw!"
             game_over = True
 
 
         if game_over:
-            pygame.time.wait(1500)
-            run_menu(screen, player1, player2)
+            print(label)
+            while True:
+                button_rect = draw_game_over(screen, "Game Over", label, myfont)
+
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+                    if event.type == pygame.MOUSEBUTTONDOWN and button_rect.collidepoint(event.pos):
+                        return
+
+                pygame.time.wait(10)
