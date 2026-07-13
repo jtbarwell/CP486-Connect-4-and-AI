@@ -3,6 +3,7 @@ import pygame
 import sys
 from gameSetting import *
 from gameFunctions import *
+from menu import run_menu
 from player import *
 
 def gameLoop(screen, p1, p2):
@@ -80,4 +81,5 @@ def gameLoop(screen, p1, p2):
             turn = turn % 2
 
         if game_over:
-            pygame.time.wait(1500)
+            pygame.time.wait(750)
+            run_menu(screen, player1, player2)

@@ -1,12 +1,12 @@
 import pygame
 from gameSetting import *
 
-AGENT_TYPES = ["user", "random", "rule-based", "minimax"]
+AGENT_TYPES = ["user", "random", "ruleBased", "miniMax"]
 AGENT_LABELS = {
     "user": "Human",
     "random": "Random",
-    "rule-based": "Rule",
-    "minimax": "MiniMax"
+    "ruleBased": "Rule",
+    "miniMax": "MiniMax"
 }
 
 
@@ -85,16 +85,18 @@ def handle_menu_click(pos, player1_type, player2_type):
                 if rect.collidepoint(pos):
                     return player1_type, AGENT_TYPES[index], False
 
+
+
     return player1_type, player2_type, False
 
 
-def run_menu(screen):
+def run_menu(screen, p1, p2):
     pygame.font.init()
     font = pygame.font.SysFont("Segoe UI", 36)
     title_font = pygame.font.SysFont("Segoe UI", 70)
 
-    player1_type = "user"
-    player2_type = "user"
+    player1_type = p1
+    player2_type = p2
 
     while True:
         for event in pygame.event.get():

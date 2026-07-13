@@ -2,7 +2,7 @@ from gameSetting import *
 from gameFunctions import *
 from player import *
 from gameLoop import gameLoop
-from menu import *
+from menu import run_menu
 
 def __main__():
     pygame.init()
@@ -10,12 +10,19 @@ def __main__():
     pygame.display.set_caption("Connect 4")
 
     current_screen = START_SCREEN
-    if current_screen == "menu":
-        p1, p2 = run_menu(screen)
-        current_screen = "game"  # Change to "game" to proceed to the game loop
+    p1 = "user"
+    p2 = "user"
 
-    if current_screen == "game":
-        gameLoop(screen, p1, p2)
+    while True:
+
+        if current_screen == "menu":
+            p1, p2 = run_menu(screen, p1, p2)
+            current_screen = "game"  # Change to "game" to proceed to the game loop
+
+        if current_screen == "game":
+            gameLoop(screen, p1, p2)
+            current_screen = "menu"  # Change back to "menu" after the game loop ends
+
 
 if __name__ == "__main__":
     __main__()
