@@ -9,12 +9,12 @@ and score each window by how many of your discs vs. the opponent’s it contains
 plus a small weight for centre-column control. You may design your own — just describe it precisely in the report. 
 """
 import numpy as np
+import random
 import math
 from gameSetting import *
 from gameFunctions import *
 
 WINDOW_LENGTH = 4
-DEPTH = 4
 
 def evaluate_window(window, pnum):
     score = 0
@@ -70,30 +70,53 @@ def score_position(board, pnum):
 
     return score
 
-def miniMaxAgent(board, pnum, depth):
-    # Check for terminal states
-    if winning_move(board, pnum):
-        return (None, 100000000000000)
-    elif winning_move(board, 1 if pnum == 2 else 2):
-        return (None, -10000000000000)
-    elif len(get_valid_locations(board)) == 0:
-        return (None, 0)
+def is_terminal_node(board):
+	return winning_move(board, 1) or winning_move(board, 2) or len(get_valid_locations(board)) == 0
 
-    if depth == 0:
-        return (None, score_position(board, pnum))
+def miniMaxAgent(board, pnum, depth, alpha, beta, maximizingPlayer):
+
+    opponent = 1 if pnum == 2 else 2
 
     valid_locations = get_valid_locations(board)
-    best_score = -math.inf
-    best_col = np.random.choice(valid_locations)
+    is_terminal = is_terminal_node(board)
 
-    for col in valid_locations:
-        row = get_next_open_row(board, col)
-        temp_board = board.copy()
-        drop_piece(temp_board, row, col, pnum)
-        score = miniMaxAgent(temp_board, 1 if pnum == 2 else 2, depth - 1)[1]
+    if is_terminal:
+        if winning_move(board, pnum):
+            return (None, 100000000000000)
+        elif winning_move(board, 1 if pnum == 2 else 2):
+            return (None, -10000000000000)
+        elif len(get_valid_locations(board)) == 0:
+            return (None, 0)
 
-        if score > best_score:
-            best_score = score
-            best_col = col
+    if depth == 0:
+        return (None, score_position(board, pnum)) # always scored for the root agent
 
-    return best_col, best_score
+    if maximizingPlayer:
+        value = -math.inf
+        column = random.choice(valid_locations)
+        for col in valid_locations:
+            row = get_next_open_row(board, col)
+            b_copy = board.copy()
+            drop_piece(b_copy, row, col, pnum)  # root agent drops here
+            new_score = miniMaxAgent(b_copy, pnum, depth-1, alpha, beta, False)[1]
+            if new_score > value:
+                value, column = new_score, col
+            alpha = max(alpha, value)
+            if alpha >= beta:
+                break
+        return column, value
+
+    else:
+        value = math.inf
+        column = random.choice(valid_locations)
+        for col in valid_locations:
+            row = get_next_open_row(board, col)
+            b_copy = board.copy()
+            drop_piece(b_copy, row, col, opponent)  # opponent drops here
+            new_score = miniMaxAgent(b_copy, pnum, depth-1, alpha, beta, True)[1]
+            if new_score < value:
+                value, column = new_score, col
+            beta = min(beta, value)
+            if alpha >= beta:
+                break
+        return column, value
