@@ -35,7 +35,7 @@ def ruleBasedAgent(board, pnum):
     center_col = COLUMN_COUNT // 2
     if is_valid_location(board, center_col):
         row = get_next_open_row(board, center_col)
-        return row, col
+        return row, center_col
 
     # Extend own longest line / create threats
     for col in range(COLUMN_COUNT):
