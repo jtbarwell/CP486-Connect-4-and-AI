@@ -5,6 +5,8 @@ import math
 
 START_SCREEN = "menu"
 
+TIME_BETWEEN_MOVES = 750  # milliseconds
+
 BLUE = (48,98,124)
 BOARD_BLUE = (0, 0, 255)
 BLACK = (0,0,0)
@@ -20,6 +22,8 @@ ROW_COUNT = 6
 COLUMN_COUNT = 7
 
 SQUARESIZE = 100
+
+MINIMAX_DEPTH = 4
 
 width = COLUMN_COUNT * SQUARESIZE
 height = (ROW_COUNT+1) * SQUARESIZE
