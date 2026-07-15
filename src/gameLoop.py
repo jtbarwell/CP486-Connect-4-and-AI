@@ -41,7 +41,7 @@ def gameLoop(screen, p1, p2):
             turn += 1
             turn = turn % 2
         
-        if player1 == "user" or player2 == "user" and not game_over:
+        elif (player1 == "user" or player2 == "user") and not game_over:
             for event in pygame.event.get():
 
                 if event.type == pygame.MOUSEMOTION:
@@ -81,7 +81,7 @@ def gameLoop(screen, p1, p2):
                     turn = turn % 2
 
         # Player 2 Input if Player 2 is an agent (not user)
-        if player2 != "user" and turn == 1 and not game_over:
+        elif player2 != "user" and turn == 1 and not game_over:
             pygame.time.wait(TIME_BETWEEN_MOVES)
             playerAction(player2, board, 2)
 
