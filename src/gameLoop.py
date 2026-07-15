@@ -21,10 +21,14 @@ def gameLoop(screen, p1, p2):
     myfont = pygame.font.SysFont("monospace", 75)
 
     while not game_over:
+        for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
         # Player 1 Input if Player 1 is an agent (not user)
         if player1 != "user" and turn == 0 and not game_over:
-            pygame.time.wait(500)
+            pygame.time.wait(TIME_BETWEEN_MOVES)
             playerAction(player1, board, 1)
 
             if winning_move(board, 1):
@@ -39,8 +43,6 @@ def gameLoop(screen, p1, p2):
         
         if player1 == "user" or player2 == "user" and not game_over:
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
 
                 if event.type == pygame.MOUSEMOTION:
                     pygame.draw.rect(screen, NAVY_BG, (0,0, width, SQUARESIZE))
@@ -80,7 +82,7 @@ def gameLoop(screen, p1, p2):
 
         # Player 2 Input if Player 2 is an agent (not user)
         if player2 != "user" and turn == 1 and not game_over:
-            pygame.time.wait(500)
+            pygame.time.wait(TIME_BETWEEN_MOVES)
             playerAction(player2, board, 2)
 
             if winning_move(board, 2):
