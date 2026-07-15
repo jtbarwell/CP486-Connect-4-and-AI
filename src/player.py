@@ -18,11 +18,15 @@ def playerAction(playerType, board, pnum, event=None):
             drop_piece(board, row, col, pnum)
 
     elif playerType == "random":
-        randomAgent(board, pnum)
+        row, col = randomAgent(board)
+        drop_piece(board, row, col, pnum)
+        
     elif playerType == "ruleBased":
-        ruleBasedAgent(board, pnum)
+        row, col = ruleBasedAgent(board, pnum)
+        drop_piece(board, row, col, pnum)
+
     elif playerType == "miniMax":
-        best_col, best_score = miniMaxAgent(board, pnum, 4)  # Assuming depth of 4 for the minimax agent
+        best_col, best_score = miniMaxAgent(board, pnum, MINIMAX_DEPTH, -math.inf, math.inf, True)
         drop_piece(board, get_next_open_row(board, best_col), best_col, pnum)
     else:
         print("Invalid player type. Please choose 'user', 'random', 'ruleBased', or 'miniMax'.")
