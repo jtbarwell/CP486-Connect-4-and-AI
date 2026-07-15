@@ -19,8 +19,7 @@ def ruleBasedAgent(board, pnum):
             temp_board = board.copy()
             drop_piece(temp_board, row, col, pnum)
             if winning_move(temp_board, pnum):
-                drop_piece(board, row, col, pnum)
-                return
+                return row, col
 
     # Check for opponent's winning move and block it
     opponent_pnum = 1 if pnum == 2 else 2
@@ -30,19 +29,16 @@ def ruleBasedAgent(board, pnum):
             temp_board = board.copy()
             drop_piece(temp_board, row, col, opponent_pnum)
             if winning_move(temp_board, opponent_pnum):
-                drop_piece(board, row, col, pnum)
-                return
+                return row, col
 
     # Prefer central columns
     center_col = COLUMN_COUNT // 2
     if is_valid_location(board, center_col):
         row = get_next_open_row(board, center_col)
-        drop_piece(board, row, center_col, pnum)
-        return
+        return row, center_col
 
     # Extend own longest line / create threats
     for col in range(COLUMN_COUNT):
         if is_valid_location(board, col):
             row = get_next_open_row(board, col)
-            drop_piece(board, row, col, pnum)
-            return
+            return row, col
