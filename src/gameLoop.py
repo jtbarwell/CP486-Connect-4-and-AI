@@ -21,10 +21,6 @@ def gameLoop(screen, p1, p2):
     myfont = pygame.font.SysFont("monospace", 75)
 
     while not game_over:
-        for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
 
         # Player 1 Input if Player 1 is an agent (not user)
         if player1 != "user" and turn == 0 and not game_over:
