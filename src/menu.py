@@ -54,7 +54,7 @@ def draw_game_over(screen, message, subtitle, font):
     screen.blit(label, (width // 2 - label.get_width() // 2, 10))
     
 
-    subtitle_label = pygame.font.SysFont("monospace", 50).render(subtitle, True, WHITE)
+    subtitle_label = pygame.font.SysFont("monospace", round(len(subtitle)*1.5)).render(subtitle, True, WHITE)
     screen.blit(subtitle_label, (width // 2 - subtitle_label.get_width() // 2, 200))
 
     button_rect = pygame.Rect(width // 2 - 120, 280, 240, 60)
