@@ -71,49 +71,47 @@ def score_position(board, pnum):
     return score
 
 def miniMaxAgent(board, pnum, depth, a, b, maxPlayer):
-
     opponent = 1 if pnum == 2 else 2
+    current_player = pnum if maxPlayer else opponent
 
     valid_locations = get_valid_locations(board)
-    is_terminal = winning_move(board, 1) or winning_move(board, 2) or len(get_valid_locations(board)) == 0
+    is_terminal = (
+        winning_move(board, 1)
+        or winning_move(board, 2)
+        or len(valid_locations) == 0
+    )
 
     if is_terminal:
         if winning_move(board, pnum):
             return (None, 100000000000000)
-        elif winning_move(board, 1 if pnum == 2 else 2):
-            return (None, -10000000000000)
-        elif len(get_valid_locations(board)) == 0:
+        elif winning_move(board, opponent):
+            return (None, -100000000000000)
+        else:  # draw
             return (None, 0)
 
     if depth == 0:
-        return (None, score_position(board, pnum)) # always scored for the root agent
+        return (None, score_position(board, pnum))
 
-    if maxPlayer:
-        value = -math.inf
-        column = random.choice(valid_locations)
-        for col in valid_locations:
-            row = get_next_open_row(board, col)
-            b_copy = board.copy()
-            drop_piece(b_copy, row, col, pnum)  # root agent drops here
-            new_score = miniMaxAgent(b_copy, pnum, depth-1, a, b, False)[1]
-            if new_score > value:
-                value, column = new_score, col
-            a = max(a, value)
-            if a >= b:
-                break
-        return column, value
+    best_col = random.choice(valid_locations)
+    best_value = -math.inf if maxPlayer else math.inf
 
-    else:
-        value = math.inf
-        column = random.choice(valid_locations)
-        for col in valid_locations:
-            row = get_next_open_row(board, col)
-            b_copy = board.copy()
-            drop_piece(b_copy, row, col, opponent)  # opponent drops here
-            new_score = miniMaxAgent(b_copy, pnum, depth-1, a, b, True)[1]
-            if new_score < value:
-                value, column = new_score, col
-            b = min(b, value)
-            if a >= b:
-                break
-        return column, value
+    for col in valid_locations:
+        row = get_next_open_row(board, col)
+        board_copy = board.copy()
+        drop_piece(board_copy, row, col, current_player)
+
+        _, score = miniMaxAgent(board_copy, pnum, depth - 1, a, b, not maxPlayer)
+
+        if maxPlayer:
+            if score > best_value:
+                best_value, best_col = score, col
+            a = max(a, best_value)
+        else:
+            if score < best_value:
+                best_value, best_col = score, col
+            b = min(b, best_value)
+
+        if a >= b:
+            break
+
+    return best_col, best_value
