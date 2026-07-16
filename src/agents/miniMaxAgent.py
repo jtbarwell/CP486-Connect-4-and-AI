@@ -70,15 +70,12 @@ def score_position(board, pnum):
 
     return score
 
-def is_terminal_node(board):
-	return winning_move(board, 1) or winning_move(board, 2) or len(get_valid_locations(board)) == 0
-
-def miniMaxAgent(board, pnum, depth, alpha, beta, maximizingPlayer):
+def miniMaxAgent(board, pnum, depth, a, b, maxPlayer):
 
     opponent = 1 if pnum == 2 else 2
 
     valid_locations = get_valid_locations(board)
-    is_terminal = is_terminal_node(board)
+    is_terminal = winning_move(board, 1) or winning_move(board, 2) or len(get_valid_locations(board)) == 0
 
     if is_terminal:
         if winning_move(board, pnum):
@@ -91,18 +88,18 @@ def miniMaxAgent(board, pnum, depth, alpha, beta, maximizingPlayer):
     if depth == 0:
         return (None, score_position(board, pnum)) # always scored for the root agent
 
-    if maximizingPlayer:
+    if maxPlayer:
         value = -math.inf
         column = random.choice(valid_locations)
         for col in valid_locations:
             row = get_next_open_row(board, col)
             b_copy = board.copy()
             drop_piece(b_copy, row, col, pnum)  # root agent drops here
-            new_score = miniMaxAgent(b_copy, pnum, depth-1, alpha, beta, False)[1]
+            new_score = miniMaxAgent(b_copy, pnum, depth-1, a, b, False)[1]
             if new_score > value:
                 value, column = new_score, col
-            alpha = max(alpha, value)
-            if alpha >= beta:
+            a = max(a, value)
+            if a >= b:
                 break
         return column, value
 
@@ -113,10 +110,10 @@ def miniMaxAgent(board, pnum, depth, alpha, beta, maximizingPlayer):
             row = get_next_open_row(board, col)
             b_copy = board.copy()
             drop_piece(b_copy, row, col, opponent)  # opponent drops here
-            new_score = miniMaxAgent(b_copy, pnum, depth-1, alpha, beta, True)[1]
+            new_score = miniMaxAgent(b_copy, pnum, depth-1, a, b, True)[1]
             if new_score < value:
                 value, column = new_score, col
-            beta = min(beta, value)
-            if alpha >= beta:
+            b = min(b, value)
+            if a >= b:
                 break
         return column, value
