@@ -11,8 +11,7 @@ import numpy as np
 from gameSetting import *
 from gameFunctions import *
 
-def ruleBasedAgent(board, pnum):
-    np.random.seed(SEED)
+def ruleBasedAgent(board, pnum, rng):
     # Check for winning move
     winning_moves = []
     for col in range(COLUMN_COUNT):
@@ -23,7 +22,7 @@ def ruleBasedAgent(board, pnum):
             if winning_move(temp_board, pnum):
                 winning_moves.append(col)
     if len(winning_moves) >= 1:
-        col = np.random.choice(winning_moves)
+        col = rng.choice(winning_moves)
         row = get_next_open_row(board, col)
         return row, col
 
@@ -38,7 +37,7 @@ def ruleBasedAgent(board, pnum):
             if winning_move(temp_board, opponent_pnum):
                 opp_winning_moves.append(col)
     if len(opp_winning_moves) >= 1:
-        col = np.random.choice(opp_winning_moves)
+        col = rng.choice(opp_winning_moves)
         row = get_next_open_row(board, col)
         return row, col
 
@@ -53,6 +52,6 @@ def ruleBasedAgent(board, pnum):
     for col in range(COLUMN_COUNT):
         if is_valid_location(board, col):
             valid_moves.append(col)
-    col = np.random.choice(valid_moves)
+    col = rng.choice(valid_moves)
     row = get_next_open_row(board, col)
     return row, col

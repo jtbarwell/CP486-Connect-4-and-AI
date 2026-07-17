@@ -17,6 +17,8 @@ def gameLoop(screen, p1, p2):
     screen.fill(BLACK)
     draw_board(board, screen)
     pygame.display.update()
+    
+    rng = np.random.default_rng(seed=SEED)
 
     myfont = pygame.font.SysFont("monospace", 75)
 
@@ -25,7 +27,7 @@ def gameLoop(screen, p1, p2):
         # Player 1 Input if Player 1 is an agent (not user)
         if player1 != "user" and turn == 0 and not game_over:
             pygame.time.wait(TIME_BETWEEN_MOVES)
-            playerAction(player1, board, 1, screen)
+            playerAction(player1, board, 1, rng, screen)
 
             if winning_move(board, 1):
                 label = "Player 1 (" + player1 + ") wins!!"
@@ -40,7 +42,7 @@ def gameLoop(screen, p1, p2):
         # Player 2 Input if Player 2 is an agent (not user)
         elif player2 != "user" and turn == 1 and not game_over:
             pygame.time.wait(TIME_BETWEEN_MOVES)
-            playerAction(player2, board, 2, screen)
+            playerAction(player2, board, 2, rng, screen)
 
             if winning_move(board, 2):
                 label = "Player 2 (" + player2 + ") wins!!"
@@ -69,7 +71,7 @@ def gameLoop(screen, p1, p2):
                     #print(event.pos)
                     # Ask for Player 1 Input
                     if turn == 0:
-                        valid = playerAction(player1, board, 1, screen, event)
+                        valid = playerAction(player1, board, 1, rng, screen, event)
 
                         if winning_move(board, 1):
                             label = "Player 1 (" + player1 + ") wins!!"
@@ -77,7 +79,7 @@ def gameLoop(screen, p1, p2):
 
                     # # Ask for Player 2 Input if Player 2 is a user
                     else:
-                        valid = playerAction(player2, board, 2, screen, event)
+                        valid = playerAction(player2, board, 2, rng, screen, event)
 
                         if winning_move(board, 2):
                             label = "Player 2 (" + player2 + ") wins!!"

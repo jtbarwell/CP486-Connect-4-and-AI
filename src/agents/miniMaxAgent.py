@@ -69,7 +69,7 @@ def score_position(board, pnum):
 
     return score
 
-def miniMaxAgent(board, pnum, depth, a, b, maxPlayer):
+def miniMaxAgent(board, pnum, depth, a, b, maxPlayer, rng):
     opponent = 1 if pnum == 2 else 2
     current_player = pnum if maxPlayer else opponent
 
@@ -91,8 +91,7 @@ def miniMaxAgent(board, pnum, depth, a, b, maxPlayer):
     if depth == 0:
         return (None, score_position(board, pnum))
 
-    np.random.seed(SEED)
-    best_col = np.random.choice(valid_locations)
+    best_col = rng.choice(valid_locations)
     best_value = -math.inf if maxPlayer else math.inf
 
     for col in valid_locations:
@@ -100,7 +99,7 @@ def miniMaxAgent(board, pnum, depth, a, b, maxPlayer):
         board_copy = board.copy()
         drop_piece(board_copy, row, col, current_player)
 
-        _, score = miniMaxAgent(board_copy, pnum, depth - 1, a, b, not maxPlayer)
+        _, score = miniMaxAgent(board_copy, pnum, depth - 1, a, b, not maxPlayer, rng)
 
         if maxPlayer:
             if score > best_value:

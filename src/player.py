@@ -7,7 +7,7 @@ from agents.randomAgent import randomAgent
 from agents.miniMaxAgent import miniMaxAgent
 from agents.ruleBasedAgent import ruleBasedAgent
 
-def playerAction(playerType, board, pnum, screen=None, event=None):
+def playerAction(playerType, board, pnum, rng, screen=None, event=None):
     
     if playerType == "user":
         posx = event.pos[0]
@@ -21,7 +21,7 @@ def playerAction(playerType, board, pnum, screen=None, event=None):
 
     elif playerType == "random":
         start_time = time.perf_counter()
-        row, col = randomAgent(board)
+        row, col = randomAgent(board, rng)
         end_time = time.perf_counter()
         processing_time = end_time-start_time
         print(f"Processing time: {processing_time:.6f}")
@@ -29,7 +29,7 @@ def playerAction(playerType, board, pnum, screen=None, event=None):
         
     elif playerType == "ruleBased":
         start_time = time.perf_counter()
-        row, col = ruleBasedAgent(board, pnum)
+        row, col = ruleBasedAgent(board, pnum, rng)
         end_time = time.perf_counter()
         processing_time = end_time-start_time
         print(f"Processing time: {processing_time:.6f}")
@@ -37,7 +37,7 @@ def playerAction(playerType, board, pnum, screen=None, event=None):
 
     elif playerType == "miniMax":
         start_time = time.perf_counter()
-        best_col, best_score = miniMaxAgent(board, pnum, MINIMAX_DEPTH, -math.inf, math.inf, True)
+        best_col, best_score = miniMaxAgent(board, pnum, MINIMAX_DEPTH, -math.inf, math.inf, True, rng)
         end_time = time.perf_counter()
         processing_time = end_time-start_time
         print(f"Processing time: {processing_time:.6f}")
