@@ -25,7 +25,7 @@ def gameLoop(screen, p1, p2):
         # Player 1 Input if Player 1 is an agent (not user)
         if player1 != "user" and turn == 0 and not game_over:
             pygame.time.wait(TIME_BETWEEN_MOVES)
-            playerAction(player1, board, 1)
+            playerAction(player1, board, 1, screen)
 
             if winning_move(board, 1):
                 label = "Player 1 (" + player1 + ") wins!!"
@@ -36,7 +36,22 @@ def gameLoop(screen, p1, p2):
 
             turn += 1
             turn = turn % 2
-        
+
+        # Player 2 Input if Player 2 is an agent (not user)
+        elif player2 != "user" and turn == 1 and not game_over:
+            pygame.time.wait(TIME_BETWEEN_MOVES)
+            playerAction(player2, board, 2, screen)
+
+            if winning_move(board, 2):
+                label = "Player 2 (" + player2 + ") wins!!"
+                game_over = True
+
+            print_board(board)
+            draw_board(board, screen)
+
+            turn += 1
+            turn = turn % 2
+            
         elif (player1 == "user" or player2 == "user") and not game_over:
             for event in pygame.event.get():
 
@@ -54,42 +69,26 @@ def gameLoop(screen, p1, p2):
                     #print(event.pos)
                     # Ask for Player 1 Input
                     if turn == 0:
-                        playerAction(player1, board, 1, event)
+                        valid = playerAction(player1, board, 1, screen, event)
 
                         if winning_move(board, 1):
                             label = "Player 1 (" + player1 + ") wins!!"
                             game_over = True
 
-
                     # # Ask for Player 2 Input if Player 2 is a user
                     else:
-                        if player2 == "user":
-                            playerAction(player2, board, 2, event)
+                        valid = playerAction(player2, board, 2, screen, event)
 
-                            if winning_move(board, 2):
-                                label = "Player 2 (" + player2 + ") wins!!"
-                                game_over = True
+                        if winning_move(board, 2):
+                            label = "Player 2 (" + player2 + ") wins!!"
+                            game_over = True
 
                     print_board(board)
                     draw_board(board, screen)
-
-                    turn += 1
-                    turn = turn % 2
-
-        # Player 2 Input if Player 2 is an agent (not user)
-        elif player2 != "user" and turn == 1 and not game_over:
-            pygame.time.wait(TIME_BETWEEN_MOVES)
-            playerAction(player2, board, 2)
-
-            if winning_move(board, 2):
-                label = "Player 2 (" + player2 + ") wins!!"
-                game_over = True
-
-            print_board(board)
-            draw_board(board, screen)
-
-            turn += 1
-            turn = turn % 2
+                    
+                    if valid:
+                        turn += 1
+                        turn = turn % 2
 
         # Check for draw
         if not game_over and len(get_valid_locations(board)) == 0:

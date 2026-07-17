@@ -6,6 +6,7 @@ import math
 START_SCREEN = "menu"
 
 TIME_BETWEEN_MOVES = 750  # milliseconds
+TIME_BETWEEN_FRAMES = 10  # milliseconds
 
 BLUE = (48,98,124)
 BOARD_BLUE = (0, 0, 255)
