@@ -12,24 +12,35 @@ from gameSetting import *
 from gameFunctions import *
 
 def ruleBasedAgent(board, pnum):
+    np.random.seed(SEED)
     # Check for winning move
+    winning_moves = []
     for col in range(COLUMN_COUNT):
         if is_valid_location(board, col):
             row = get_next_open_row(board, col)
             temp_board = board.copy()
             drop_piece(temp_board, row, col, pnum)
             if winning_move(temp_board, pnum):
-                return row, col
+                winning_moves.append(col)
+    if len(winning_moves) >= 1:
+        col = np.random.choice(winning_moves)
+        row = get_next_open_row(board, col)
+        return row, col
 
     # Check for opponent's winning move and block it
     opponent_pnum = 1 if pnum == 2 else 2
+    opp_winning_moves = []
     for col in range(COLUMN_COUNT):
         if is_valid_location(board, col):
             row = get_next_open_row(board, col)
             temp_board = board.copy()
             drop_piece(temp_board, row, col, opponent_pnum)
             if winning_move(temp_board, opponent_pnum):
-                return row, col
+                opp_winning_moves.append(col)
+    if len(opp_winning_moves) >= 1:
+        col = np.random.choice(opp_winning_moves)
+        row = get_next_open_row(board, col)
+        return row, col
 
     # Prefer central columns
     center_col = COLUMN_COUNT // 2
@@ -38,7 +49,10 @@ def ruleBasedAgent(board, pnum):
         return row, center_col
 
     # Extend own longest line / create threats
+    valid_moves = []
     for col in range(COLUMN_COUNT):
         if is_valid_location(board, col):
-            row = get_next_open_row(board, col)
-            return row, col
+            valid_moves.append(col)
+    col = np.random.choice(valid_moves)
+    row = get_next_open_row(board, col)
+    return row, col
