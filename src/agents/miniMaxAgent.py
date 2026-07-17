@@ -9,7 +9,6 @@ and score each window by how many of your discs vs. the opponent’s it contains
 plus a small weight for centre-column control. You may design your own — just describe it precisely in the report. 
 """
 import numpy as np
-import random
 import math
 from gameSetting import *
 from gameFunctions import *
@@ -92,7 +91,8 @@ def miniMaxAgent(board, pnum, depth, a, b, maxPlayer):
     if depth == 0:
         return (None, score_position(board, pnum))
 
-    best_col = random.choice(valid_locations)
+    np.random.seed(SEED)
+    best_col = np.random.choice(valid_locations)
     best_value = -math.inf if maxPlayer else math.inf
 
     for col in valid_locations:

@@ -3,6 +3,8 @@ import pygame
 import sys
 import math
 
+SEED = 468
+
 START_SCREEN = "menu"
 
 TIME_BETWEEN_MOVES = 750  # milliseconds
