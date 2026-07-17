@@ -6,7 +6,9 @@ def create_board():
 	board = np.zeros((ROW_COUNT,COLUMN_COUNT))
 	return board
 
-def drop_piece(board, row, col, piece):
+def drop_piece(board, row, col, piece, screen=None):
+	if screen is not None: 
+		animate_drop(board, screen, row, col, piece)
 	board[row][col] = piece
 
 def is_valid_location(board, col):
@@ -66,3 +68,28 @@ def draw_board(board, screen):
 			elif board[r][c] == 2: 
 				pygame.draw.circle(screen, YELLOW, (int(c*SQUARESIZE+SQUARESIZE/2), height-int(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
 	pygame.display.update()
+
+def animate_drop(board, screen, row, col, piece):
+    inAnimation = True
+    posY = int(SQUARESIZE/2)
+    vel = 0
+    while inAnimation:
+        pygame.time.wait(TIME_BETWEEN_FRAMES)
+        vel += 1
+        posY += vel
+        
+        if posY >= height-int(row*SQUARESIZE+SQUARESIZE/2):
+            posY = height-int(row*SQUARESIZE+SQUARESIZE/2)
+            inAnimation = False
+        
+        pygame.draw.rect(screen, NAVY_BG, (0,0, width, SQUARESIZE))
+        draw_board(board, screen)
+        if piece == 1:
+            pygame.draw.circle(screen, RED, (int(col*SQUARESIZE+SQUARESIZE/2), posY), RADIUS)
+            if inAnimation: pygame.draw.circle(screen, RED, (int(col*SQUARESIZE+SQUARESIZE/2), posY-vel), RADIUS)
+        elif piece == 2: 
+            pygame.draw.circle(screen, YELLOW, (int(col*SQUARESIZE+SQUARESIZE/2), posY), RADIUS)
+            if inAnimation: pygame.draw.circle(screen, YELLOW, (int(col*SQUARESIZE+SQUARESIZE/2), posY-vel), RADIUS)
+        pygame.display.update()
+        
+    return
