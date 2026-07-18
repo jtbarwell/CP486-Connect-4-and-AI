@@ -24,7 +24,7 @@ def playerAction(playerType, board, pnum, rng, screen=None, event=None):
         row, col = randomAgent(board, rng)
         end_time = time.perf_counter()
         processing_time = end_time-start_time
-        print(f"Processing time: {processing_time:.6f}")
+        print(f"Processing time (P{pnum}): {processing_time:.6f}")
         drop_piece(board, row, col, pnum, screen)
         
     elif playerType == "ruleBased":
@@ -32,7 +32,7 @@ def playerAction(playerType, board, pnum, rng, screen=None, event=None):
         row, col = ruleBasedAgent(board, pnum, rng)
         end_time = time.perf_counter()
         processing_time = end_time-start_time
-        print(f"Processing time: {processing_time:.6f}")
+        print(f"Processing time (P{pnum}): {processing_time:.6f}")
         drop_piece(board, row, col, pnum, screen)
 
     elif playerType == "miniMax":
@@ -40,7 +40,7 @@ def playerAction(playerType, board, pnum, rng, screen=None, event=None):
         best_col, best_score = miniMaxAgent(board, pnum, MINIMAX_DEPTH, -math.inf, math.inf, True, rng)
         end_time = time.perf_counter()
         processing_time = end_time-start_time
-        print(f"Processing time: {processing_time:.6f}")
+        print(f"Processing time (P{pnum}): {processing_time:.6f}")
         drop_piece(board, get_next_open_row(board, best_col), best_col, pnum, screen)
     else:
         print("Invalid player type. Please choose 'user', 'random', 'ruleBased', or 'miniMax'.")
