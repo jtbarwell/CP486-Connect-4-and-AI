@@ -7,7 +7,7 @@ SEED = 468  # instantiate variable
 
 START_SCREEN = "menu"
 
-TIME_BETWEEN_MOVES = 750  # milliseconds
+TIME_BETWEEN_MOVES = 75  # milliseconds
 TIME_BETWEEN_FRAMES = 10  # milliseconds
 
 BLUE = (48,98,124)
