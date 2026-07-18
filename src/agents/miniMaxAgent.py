@@ -27,8 +27,12 @@ def evaluate_window(window, pnum):
     elif window.count(pnum) == 2 and empty_count == 2:
         score += 2
 
-    if window.count(opponent_pnum) == 3 and empty_count == 1:
-        score -= 4
+    if window.count(opponent_pnum) == 4:
+        score -= 100
+    elif window.count(opponent_pnum) == 3 and empty_count == 1:
+        score -= 5
+    elif window.count(opponent_pnum) == 2 and empty_count == 2:
+        score -= 2
 
     return score
 
