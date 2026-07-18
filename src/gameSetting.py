@@ -3,7 +3,7 @@ import pygame
 import sys
 import math
 
-SEED = 468
+SEED = 468  # instantiate variable
 
 START_SCREEN = "menu"
 
