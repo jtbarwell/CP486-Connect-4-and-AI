@@ -3,8 +3,7 @@ import pygame
 import sys
 from gameSetting import *
 from gameFunctions import *
-from menu import draw_game_over
-from menu import seedInput
+import menu
 from player import *
 
 def gameLoop(screen, p1, p2):
@@ -19,7 +18,8 @@ def gameLoop(screen, p1, p2):
     draw_board(board, screen)
     pygame.display.update()
     
-    rng = np.random.default_rng(seed=seedInput)
+    rng = np.random.default_rng(seed=int(menu.seedInput))
+    print(int(menu.seedInput))
 
     myfont = pygame.font.SysFont("monospace", 75)
 
@@ -102,7 +102,7 @@ def gameLoop(screen, p1, p2):
         if game_over:
             print(label)
             while True:
-                button_rect = draw_game_over(screen, "Game Over", label, myfont)
+                button_rect = menu.draw_game_over(screen, "Game Over", label, myfont)
 
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
