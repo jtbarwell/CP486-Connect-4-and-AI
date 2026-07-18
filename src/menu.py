@@ -170,11 +170,9 @@ def run_menu(screen, p1, p2):
                     if seed_text.strip() == "":
                         seedInput = random.randint(100000000, 999999999)
                         print(seedInput)
-                        SEED = seedInput
                     else:
                         seedInput = seed_text
                         print(seedInput)
-                        SEED = seedInput
                     return player1_type, player2_type
 
             if event.type == pygame.KEYDOWN and seed_active:

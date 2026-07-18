@@ -4,11 +4,12 @@ import sys
 from gameSetting import *
 from gameFunctions import *
 from menu import draw_game_over
+from menu import seedInput
 from player import *
 
 def gameLoop(screen, p1, p2):
     board = create_board()
-    print_board(board)
+    # print_board(board)
     game_over = False
     turn = 0
 
@@ -18,7 +19,7 @@ def gameLoop(screen, p1, p2):
     draw_board(board, screen)
     pygame.display.update()
     
-    rng = np.random.default_rng(seed=SEED)
+    rng = np.random.default_rng(seed=seedInput)
 
     myfont = pygame.font.SysFont("monospace", 75)
 
@@ -33,7 +34,7 @@ def gameLoop(screen, p1, p2):
                 label = "Player 1 (" + player1 + ") wins!!"
                 game_over = True
 
-            print_board(board)
+            # print_board(board)
             draw_board(board, screen)
 
             turn += 1
@@ -48,7 +49,7 @@ def gameLoop(screen, p1, p2):
                 label = "Player 2 (" + player2 + ") wins!!"
                 game_over = True
 
-            print_board(board)
+            # print_board(board)
             draw_board(board, screen)
 
             turn += 1
@@ -85,7 +86,7 @@ def gameLoop(screen, p1, p2):
                             label = "Player 2 (" + player2 + ") wins!!"
                             game_over = True
 
-                    print_board(board)
+                    # print_board(board)
                     draw_board(board, screen)
                     
                     if valid:
